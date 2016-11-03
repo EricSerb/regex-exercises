@@ -4,6 +4,7 @@ Search Exercises
 These functions return a list of strings matching a condition.
 
 """
+import re
 
 
 with open('dictionary.txt') as dict_file:
@@ -12,6 +13,12 @@ with open('dictionary.txt') as dict_file:
 
 def get_extension(filename):
     """Return the file extension for a full file path."""
+    # This tells person that it is .tar.gz
+    # p = re.compile(r'^.*?[.](?P<ext>tar\.gz|tar\.bz2|\w+)$')
+    # this will only return last part of the extension
+    p = re.compile(r'^.*?[.](\w+)?$')
+    return re.findall(p, filename)[0]
+
 
 
 def tetravocalic(dictionary=dictionary):
@@ -42,6 +49,9 @@ def five_repeats(letter, dictionary=dictionary):
 
 def abbreviate(phrase):
     """Return an acronym for the given phrase."""
+    pat = re.compile(r"\b[\w\d]|[A-Z]", re.X)
+    return ''.join(letter.upper() for letter in re.findall(pat, phrase))
+
 
 
 def palindrome5(dictionary=dictionary):
@@ -68,3 +78,6 @@ def repeaters(dictionary=dictionary):
     - cancan
     - murmur
     """
+
+if __name__ == '__main__':
+    get_extension('filename.jpg')
